@@ -1,26 +1,89 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-cream text-coffee-dark font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold text-coffee-dark;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply bg-coffee-dark text-white px-6 py-3 rounded-full font-semibold 
+           transition-all duration-200 hover:bg-coffee-medium hover:-translate-y-0.5 
+           hover:shadow-lg active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply bg-accent-orange text-white px-6 py-3 rounded-full font-semibold 
+           transition-all duration-200 hover:bg-coffee-dark hover:-translate-y-0.5 
+           hover:shadow-lg;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm transition-all duration-200 
+           hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-cream-dark rounded-lg 
+           focus:outline-none focus:border-coffee-medium focus:ring-4 
+           focus:ring-coffee-dark/10 transition-all duration-200;
+  }
+
+  .label {
+    @apply block text-sm font-semibold text-coffee-dark mb-2;
+  }
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2.5 h-2.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-cream-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-coffee-light rounded-full hover:bg-coffee-medium;
+}
+
+/* Leaflet Map Overrides */
+.leaflet-container {
+  @apply font-sans rounded-lg;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply rounded-lg shadow-lg;
+}
+
+.leaflet-popup-content {
+  @apply m-4 font-sans;
+}
+
