@@ -8,20 +8,44 @@ export default function Navbar({ session }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
 
-  const handleSignOut = async () => {
-    setIsSigningOut(true);
-    try {
-      await signOut({
-        callbackUrl: "/",
-        redirect: true,
-      });
-    } catch (error) {
-      console.error("Sign out error:", error);
-      setIsSigningOut(false);
-      // Optional: Show error message to user
-      alert("Failed to sign out. Please try again.");
-    }
-  };
+const handleSignOut = async () => {
+  setIsSigningOut(true);
+  
+  try {
+    // Call NextAuth signOut
+    await signOut({ 
+      redirect: false,
+      callbackUrl: "/"
+    });
+    
+    // Call your custom logout endpoint to clear server-side cookies
+    await fetch('/api/auth/logout', { 
+      method: 'POST',
+      credentials: 'include' // Important for cookies
+    });
+    
+    // Clear all client-side storage
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Clear cookies manually (backup)
+    document.cookie.split(";").forEach(cookie => {
+      const [name] = cookie.split('=');
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}; secure=${window.location.protocol === 'https:'}`;
+    });
+    
+    // Redirect to home
+    window.location.href = "/";
+    
+  } catch (error) {
+    console.error("Sign out error:", error);
+    
+    // Even if there's an error, try to redirect
+    window.location.href = "/";
+  } finally {
+    setIsSigningOut(false);
+  }
+};
 
   return (
     <nav className="bg-white border-b border-cream-dark sticky top-0 z-50 shadow-sm">
