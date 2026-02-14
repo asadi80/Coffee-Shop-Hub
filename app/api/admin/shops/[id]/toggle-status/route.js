@@ -5,8 +5,10 @@ import connectDB from '@/lib/mongodb';
 import Shop from '@/models/Shop';
 
 export async function PATCH(request, { params }) {
-  const { id } = await params; 
   try {
+    // Await params
+    const { id } = await params;
+    
     const session = await getServerSession(authOptions);
 
     // Check if user is admin
@@ -47,4 +49,16 @@ export async function PATCH(request, { params }) {
       { status: 500 }
     );
   }
+}
+
+// Also handle OPTIONS for preflight requests
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
 }
