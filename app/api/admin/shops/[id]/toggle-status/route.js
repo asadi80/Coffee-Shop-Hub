@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
 import Shop from '@/models/Shop';
 
-export async function POST(request, { params }) {
+export async function PUT(request, { params }) {
   const { id } = await params; 
   try {
     const session = await getServerSession(authOptions);
