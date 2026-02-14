@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
+import { performLogout } from '@/lib/logout';
+
 
 export default function Navbar({ session }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,41 +12,8 @@ export default function Navbar({ session }) {
 
 const handleSignOut = async () => {
   setIsSigningOut(true);
-  
-  try {
-    // Call NextAuth signOut
-    await signOut({ 
-      redirect: false,
-      callbackUrl: "/"
-    });
-    
-    // Call your custom logout endpoint to clear server-side cookies
-    await fetch('/api/auth/logout', { 
-      method: 'POST',
-      credentials: 'include' // Important for cookies
-    });
-    
-    // Clear all client-side storage
-    localStorage.clear();
-    sessionStorage.clear();
-    
-    // Clear cookies manually (backup)
-    document.cookie.split(";").forEach(cookie => {
-      const [name] = cookie.split('=');
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}; secure=${window.location.protocol === 'https:'}`;
-    });
-    
-    // Redirect to home
-    window.location.href = "/";
-    
-  } catch (error) {
-    console.error("Sign out error:", error);
-    
-    // Even if there's an error, try to redirect
-    window.location.href = "/";
-  } finally {
-    setIsSigningOut(false);
-  }
+  await performLogout();
+  setIsSigningOut(false);
 };
 
   return (
