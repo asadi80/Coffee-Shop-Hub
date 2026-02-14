@@ -5,6 +5,7 @@ import Shop from "@/models/Shop";
 import MenuItem from "@/models/MenuItem";
 import MenuCategory from "@/models/MenuCategory";
 import { formatPrice, isShopOpen } from "@/lib/utils";
+import {QRCodeSVG} from "qrcode.react";
 
 async function getShopBySlug(slug) {
   await connectDB();
@@ -58,6 +59,9 @@ export default async function ShopPublicPage({ params }) {
         item.isAvailable,
     ),
   }));
+
+  // Generate the full URL for QR code
+  const shopUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://yourdomain.com'}/shop/${slug}`;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -157,6 +161,26 @@ export default async function ShopPublicPage({ params }) {
                       📞 Call Now
                     </a>
                   )}
+                </div>
+              </div>
+
+              {/* QR Code Card */}
+              <div className="card p-6">
+                <h2 className="text-xl font-serif font-bold text-coffee-dark mb-4">
+                  Share This Page
+                </h2>
+                <div className="flex flex-col items-center">
+                  <div className="bg-white p-4 rounded-lg shadow-md">
+                    <QRCodeSVG
+                      value={shopUrl}
+                      size={160}
+                      level="H"
+                      includeMargin={true}
+                    />
+                  </div>
+                  <p className="text-xs text-coffee-medium mt-3 text-center">
+                    Scan to view this page on your phone
+                  </p>
                 </div>
               </div>
 
