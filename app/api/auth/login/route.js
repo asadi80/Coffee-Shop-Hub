@@ -2,7 +2,6 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
-import { createAuthResponse } from '@/lib/jwt';
 import { isValidEmail } from '@/utils/validation';
 
 export async function POST(request) {
