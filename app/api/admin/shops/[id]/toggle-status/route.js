@@ -5,6 +5,8 @@ import connectDB from '@/lib/mongodb';
 import Shop from '@/models/Shop';
 
 export async function PATCH(request, { params }) {
+  console.log("Route was called");
+  
   try {
     // Await params
     const { id } = await params;
