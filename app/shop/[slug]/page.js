@@ -61,7 +61,7 @@ export default async function ShopPublicPage({ params }) {
   }));
 
   // Generate the full URL for QR code
-  const shopUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://yourdomain.com'}/shop/${slug}`;
+  const shopUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coffee-shop-hub.vercel.app/'}/shop/${slug}`;
 
   return (
     <div className="min-h-screen bg-cream">
