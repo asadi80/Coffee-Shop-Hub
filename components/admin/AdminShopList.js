@@ -36,7 +36,7 @@ export default function AdminShopList({ shops: initialShops }) {
 
     try {
       const response = await fetch(`/api/admin/shops/${shopId}/toggle-status`, {
-        method: 'PATCH',
+        method: 'POST',
       });
 
       if (!response.ok) throw new Error('Failed to update shop status');

@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
 import Shop from '@/models/Shop';
 
-export async function PATCH(request, { params }) {
+export async function POST(request, { params }) {
   console.log("Route was called");
   
   try {
