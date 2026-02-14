@@ -3,6 +3,8 @@ import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth/next';
 import Navbar from '@/components/layout/Navbar';
 import PWAInstaller from '@/components/PWAInstaller';
+import { SessionProvider } from '@/components/SessionProvider';
+
 import './globals.css';
 
 export const metadata = {
@@ -40,9 +42,12 @@ export default async function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-title" content="Coffee Hub" />
       </head>
       <body>
+        <SessionProvider>
+
         <Navbar session={session} />
         <main>{children}</main>
         <PWAInstaller />
+        </SessionProvider>
       </body>
     </html>
   );
